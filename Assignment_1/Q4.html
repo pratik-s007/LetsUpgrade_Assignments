@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Letsupgrade Assignment-1 Question-4</title>
+  </head>
+  <body>
+    Letsupgrade Assignment-1 Question-4
+    <script>
+      //Program to display only elements containing 'a' in them from an array
+      let arr = [];
+      let res = [];
+      let r;
+      let l = 0;
+      let n = prompt("Enter size of array to create:");
+      for (let i = 0; i < n; i++) {
+        arr[i] = prompt("Enter element in array:");
+      }
+      for (let i = 0; i < n; i++) {
+        r = arr[i].indexOf("a");
+        if (r >= 0) {
+          res[l] = arr[i];
+          l++;
+        }
+      }
+      if (res.length > 0) {
+        console.log("Elements containing 'a':");
+        for (let i = 0; i < res.length; i++) {
+          console.log(res[i]);
+        }
+      } else {
+        console.log("No element found");
+      }
+    </script>
+  </body>
+</html>
