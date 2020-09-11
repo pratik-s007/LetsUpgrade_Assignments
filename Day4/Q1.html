@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day4-Question1</title>
+</head>
+<body style="background-color:powderblue;">
+    <img src="https://images.freeimages.com/images/large-previews/035/young-golden-retriever-1404848.jpg" width="350" height="350" id="image" class="image" >
+    <br>
+    <button type="button" onclick="reverseImg()">Reverse Image</button>
+    <button type="button" onclick="changeImg()">Change Image</button>
+    <button type="button" onclick="changeAgain()">Change image again</button>
+</body>
+<script>
+    let first_img="https://images.freeimages.com/images/small-previews/13f/natal-sofia-4-1431300.jpg";
+    function changeImg(){
+        const eles=document.getElementsByClassName("image");
+        eles[0].src="https://images.freeimages.com/images/small-previews/389/mitze-1380778.jpg";
+    }
+    function changeAgain(){
+        const eles=document.getElementsByClassName("image");
+        eles[0].src="https://images.freeimages.com/images/small-previews/13f/natal-sofia-4-1431300.jpg";
+    }
+    function reverseImg(){
+        const eles=document.getElementsByClassName("image");
+        eles[0].src="https://images.freeimages.com/images/large-previews/035/young-golden-retriever-1404848.jpg";         
+    }
+</script>
+</html>

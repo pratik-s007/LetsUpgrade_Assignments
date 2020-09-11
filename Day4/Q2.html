@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day4-Question2</title>
+</head>
+<body style="background-color:powderblue;">
+    <input type="text" class="input" placeholder="Enter text to copy" />
+    <br><br>
+    <button type="button" onclick="copyText()" id="button">Copy Text</button>
+    <br><br>
+    <input type="text" class="input" placeholder="press copy button" />
+
+</body>
+<script>
+    function copyText(){
+        const text=document.getElementsByClassName("input");
+        text[1].value=text[0].value;
+    }
+</script>
+</html>

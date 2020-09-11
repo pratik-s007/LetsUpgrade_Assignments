@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day4-Question4</title>
+</head>
+<body>
+    Question-4
+    <script>
+        // Write a function to display all the objects having age less than 30
+        // Write a function to display all the objects having country India
+        let arr=[
+            {
+                name:"Pratik",
+                age:24,
+                country:"India",
+                hobbies:["Cricket","Games"]
+            },
+            {
+                name:"Sam",
+                age:21,
+                country:"England",
+                hobbies:["Dance","Holeyball"]
+            },
+            {
+                name:"Smith",
+                age:20,
+                country:"Americ",
+                hobbies:["Football","Singing"]
+            },
+            {
+                name:"Peterson",
+                age:40,
+                country:"England",
+                hobbies:["Football","Singing"]
+            },
+            {
+                name:"Putin",
+                age:35,
+                country:"Russia",
+                hobbies:["Chess","Cards"]
+            }
+        ];
+        function age_30(){
+            arr.forEach(function(ele){
+                if(ele.age<30){
+                    console.log(ele);
+                };
+            });
+        };
+        function country_india(){
+            arr.forEach(function(ele){
+                if(ele.country=="India"){
+                    console.log(ele);
+                };
+            });
+        };
+        console.log("Objects having less than 30:");
+        age_30();
+        console.log("Objects having country INDIA:");
+        country_india();
+    </script>
+</body>
+</html>
