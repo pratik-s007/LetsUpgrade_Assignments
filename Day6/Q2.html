@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRUD Application</title>
+    <style>
+      * {
+        margin: 0px;
+        padding: 0px;
+      }
+      .data {
+        font-family: "Segoe UI";
+        height: 1000px;
+        width: 80%;
+        background-color: rgb(252, 162, 244);
+        margin-left: 10%;
+        margin-top: 60px;
+        padding: 20px;
+        display: inline-block;
+      }
+      .table {
+        width: 100%;
+        margin-top: 20px;
+      }
+      td,
+      th {
+        height: 40px;
+        text-align: center;
+        padding: 5px;
+      }
+      input {
+        height: 40px;
+        text-indent: center;
+      }
+      button {
+        padding: 10px;
+      }
+      .form {
+        margin-top: 20px;
+      }
+      .modal {
+        width: 100%;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5);
+        position: fixed;
+        display: none;
+      }
+      .modalChild {
+        height: 100px;
+        width: 70%;
+        background-color: rgb(160, 248, 88);
+        margin-left: 15%;
+        margin-top: 100px;
+        display: inline-block;
+        padding: 80px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="modal" onclick="hideModal(event)">
+      <div class="modalChild">
+        <form onsubmit="updateBus(event)">
+          <input
+            type="text"
+            id="upBusName"
+            placeholder="Enter Bus Name"
+            required
+          />
+          <input
+            type="text"
+            id="upSource"
+            placeholder="Enter Source"
+            required
+          />
+          <input
+            type="text"
+            id="upDestination"
+            placeholder="Enter Destination"
+            required
+          />
+          <input
+            type="number"
+            id="upNumber"
+            placeholder="Enter Bus Number"
+            required
+          />
+          <input
+            type="number"
+            id="upCapcity"
+            placeholder="Enter Bus Capacity"
+            required
+          />
+
+          <button type="submit">Update Bus</button>
+        </form>
+      </div>
+    </div>
+    <div class="data">
+      <h1>BUS DATA:</h1>
+      <div class="form">
+        <form onsubmit="addBus(event)">
+          <input
+            type="text"
+            id="busname"
+            placeholder="Enter Bus Name"
+            required
+          />
+          <input type="text" id="source" placeholder="Enter source" required />
+          <input
+            type="text"
+            id="destination"
+            placeholder="Enter Destination"
+            required
+          />
+          <input
+            type="number"
+            id="number"
+            placeholder="Enter Bus Number"
+            required
+          />
+          <input
+            type="number"
+            id="capacity"
+            placeholder="Enter Bus Capacity"
+            required
+          />
+
+          <button type="submit">Add Bus</button>
+        </form>
+        <br />
+        <button onclick="showBuses()">Show Buses</button>
+      </div>
+      <div class="form">
+        <h3>Search Bus:</h3>
+        <input
+          type="text"
+          placeholder="Enter source"
+          id="searchSource"
+          onkeyup="searchByName()"
+        />
+        <input
+          type="text"
+          placeholder="Enter destination"
+          id="searchDestination"
+          onkeyup="searchByName()"
+        />
+      </div>
+      <table border="1" class="table" cellspacing="0">
+        <thead>
+          <tr>
+            <th>Sr.No.</th>
+            <th>Bus Name</th>
+            <th>Source</th>
+            <th>Destination</th>
+            <th>Number</th>
+            <th>Capacity</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody class="tdata"></tbody>
+      </table>
+    </div>
+
+    <script>
+      window.onload = function () {
+        let buses = [];
+        if (localStorage.getItem("buses") == null) {
+          let stringBuses = JSON.stringify(buses);
+          localStorage.setItem("buses", stringBuses);
+        }
+      };
+      let updateIndex = 0;
+      function display(superarray) {
+        let tabledata = "";
+        superarray.forEach(function (bus, index) {
+          let currentrow = `<tr>
+            <td>${index + 1}</td>
+            <td>${bus.busname}</td>
+            <td>${bus.bussource}</td>
+            <td>${bus.busdestination}</td>
+            <td>${bus.busnumber}</td>
+            <td>${bus.buscapacity}</td>
+
+            <td><button onclick="deleteBus(${index})">Delete</button>
+            <button onclick="showModal(${index})">Update</button>
+            </td>
+            </tr>`;
+          tabledata += currentrow;
+        });
+        document.getElementsByClassName("tdata")[0].innerHTML = tabledata;
+      }
+      function addBus(e) {
+        e.preventDefault();
+        let bus = {};
+        let busname = document.getElementById("busname").value;
+        let source = document.getElementById("source").value;
+        let destination = document.getElementById("destination").value;
+        let number = document.getElementById("number").value;
+        let capacity = document.getElementById("capacity").value;
+
+        bus.busname = busname;
+        bus.bussource = source;
+        bus.busdestination = destination;
+        bus.busnumber = Number(number); //typecasting
+        bus.buscapacity = capacity;
+
+        buses = JSON.parse(localStorage.getItem("buses"));
+        buses.push(bus);
+        localStorage.setItem("buses", JSON.stringify(buses));
+        display(buses);
+
+        document.getElementById("busname").value = "";
+        document.getElementById("source").value = "";
+        document.getElementById("destination").value = "";
+        document.getElementById("number").value = "";
+        document.getElementById("capacity").value = "";
+      }
+      function searchByName() {
+        buses = JSON.parse(localStorage.getItem("buses"));
+        let searchSource = document.getElementById("searchSource").value;
+        let searchDestination = document.getElementById("searchDestination")
+          .value;
+
+        let newdata = buses.filter(function (bus) {
+          if (
+            bus.bussource.toUpperCase() == searchSource.toUpperCase() &&
+            bus.busdestination.toUpperCase() == searchDestination.toUpperCase()
+          ) {
+            return bus;
+          }
+        });
+        display(newdata);
+      }
+      function deleteBus(index) {
+        buses = JSON.parse(localStorage.getItem("buses"));
+        buses.splice(index, 1);
+        localStorage.setItem("buses", JSON.stringify(buses));
+
+        display(buses);
+      }
+      function showModal(index) {
+        let modal = document.getElementsByClassName("modal")[0];
+        modal.style.display = "block";
+
+        copyBus(index);
+      }
+      function hideModal(event) {
+        if (event.target.className == "modal") {
+          let modal = document.getElementsByClassName("modal")[0];
+          modal.style.display = "none";
+        }
+      }
+      function copyBus(index) {
+        buses = JSON.parse(localStorage.getItem("buses"));
+        updateIndex = index;
+        let bus = buses[index];
+        console.log(bus);
+        document.getElementById("upBusName").value = bus.busname;
+        document.getElementById("upSource").value = bus.buscapacity;
+        document.getElementById("upDestination").value = bus.busdestination;
+        document.getElementById("upNumber").value = bus.busnumber;
+        document.getElementById("upCapcity").value = bus.buscapacity;
+      }
+      function updateBus(event) {
+        event.preventDefault();
+        buses = JSON.parse(localStorage.getItem("buses"));
+        let modal = document.getElementsByClassName("modal")[0];
+
+        buses[updateIndex].busname = document.getElementById("upBusName").value;
+        buses[updateIndex].bussource = document.getElementById(
+          "upSource"
+        ).value;
+        buses[updateIndex].busdestination = document.getElementById(
+          "upDestination"
+        ).value;
+        buses[updateIndex].busnumber = document.getElementById(
+          "upNumber"
+        ).value;
+        buses[updateIndex].buscapacity = document.getElementById(
+          "upCapcity"
+        ).value;
+
+        display(buses);
+        localStorage.setItem("buses", JSON.stringify(buses));
+        alert("Student Updated");
+        modal.style.display = "none";
+      }
+      function showBuses() {
+        display(JSON.parse(localStorage.getItem("buses")));
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRUD Application</title>
+    <style>
+      * {
+        margin: 0px;
+        padding: 0px;
+      }
+      .data {
+        font-family: "Segoe UI";
+        height: 500px;
+        width: 80%;
+        background-color: rgb(138, 233, 240);
+        margin-left: 10%;
+        margin-top: 60px;
+        padding: 20px;
+      }
+      .table {
+        width: 100%;
+        margin-top: 20px;
+      }
+      td,
+      th {
+        height: 40px;
+        text-align: center;
+        padding: 5px;
+      }
+      input {
+        height: 40px;
+        text-indent: center;
+      }
+      button {
+        padding: 10px;
+      }
+      .form {
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="data">
+      <h1>Employee DATA:</h1>
+      <div class="form">
+        <input
+          type="text"
+          placeholder="Enter name to search here"
+          id="searchName"
+          onkeyup="searchByName()"
+          autofocus
+        />
+        <input
+          type="text"
+          placeholder="Enter city to search here"
+          id="searchCity"
+          onkeyup="searchByCity()"
+        />
+      </div>
+      <table border="1" class="table" cellspacing="0">
+        <thead>
+          <tr>
+            <th>Sr.No.</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>City</th>
+            <th>Sallary</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody class="tdata"></tbody>
+      </table>
+    </div>
+
+    <script>
+      let employees = [
+        {
+          name: "Pratik",
+          age: 24,
+          city: "Pune",
+          sallary: 45000,
+        },
+        {
+          name: "Ajay",
+          age: 23,
+          city: "Jalgaon",
+          sallary: 72000,
+        },
+        {
+          name: "Akash",
+          age: 25,
+          city: "Nagpur",
+          sallary: 36000,
+        },
+        {
+          name: "Rutik",
+          age: 25,
+          city: "Mumbai",
+          sallary: 85000,
+        },
+        {
+          name: "Shubham",
+          age: 25,
+          city: "Amaravti",
+          sallary: 25000,
+        },
+      ];
+      function display(superarray) {
+        let tabledata = "";
+        superarray.forEach(function (employee, index) {
+          let currentrow = `<tr>
+        <td>${index + 1}</td>
+        <td>${employee.name}</td>
+        <td>${employee.age}</td>
+        <td>${employee.city}</td>
+        <td>${employee.sallary}</td>
+        <td><button onclick="deleteemployee(${index})">Delete</button></td>
+        </tr>`;
+          tabledata += currentrow;
+        });
+        document.getElementsByClassName("tdata")[0].innerHTML = tabledata;
+      }
+      display(employees);
+      function searchByName() {
+        let searchValue = document.getElementById("searchName").value;
+        let newdata = employees.filter(function (employee) {
+          return (
+            employee.name.toUpperCase().indexOf(searchValue.toUpperCase()) != -1
+          );
+        });
+        display(newdata);
+      }
+      function searchByCity() {
+        let searchValue = document.getElementById("searchCity").value;
+        let newdata = employees.filter(function (employee) {
+          return (
+            employee.city.toUpperCase().indexOf(searchValue.toUpperCase()) != -1
+          );
+        });
+        display(newdata);
+      }
+      function deleteemployee(index) {
+        employees.splice(index, 1);
+        display(employees);
+      }
+    </script>
+  </body>
+</html>
